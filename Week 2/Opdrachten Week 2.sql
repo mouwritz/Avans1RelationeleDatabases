@@ -84,3 +84,40 @@ FROM Kamer
 -- Geef een lijst met de verschillende productnummers
 SELECT DISTINCT ProductNr
 FROM Omzet
+
+-- Dia 8
+-- Geef het aantal klanten per verkoper (verkopernr)
+SELECT VerkoperNr, COUNT(KlantNr) AS AantalKlanten
+FROM Klant
+GROUP BY VerkoperNr
+
+-- Geef het aantal klanten per verkoper en per plaats
+SELECT VerkoperNr, PlaatsHfdkntr, COUNT(KlantNr) AS AantalKlanten
+FROM Klant
+GROUP BY VerkoperNr, PlaatsHfdkntr
+
+-- Geef de verkopers (Nr), die meer dan 1 klant hebben in een plaats
+SELECT VerkoperNr, PlaatsHfdkntr, COUNT(KlantNr) AS AantalKlanten
+FROM Klant
+GROUP BY VerkoperNr, PlaatsHfdkntr
+HAVING COUNT(KlantNr) > 1
+
+-- Geef de verkopers (Naam), die meer dan 1 klant hebben in een plaats
+SELECT VerkoperNaam
+FROM Verkoper
+WHERE VerkoperNr IN (SELECT VerkoperNr
+					FROM Klant
+					GROUP BY VerkoperNr, PlaatsHfdkntr
+					HAVING COUNT(KlantNr) > 1)
+
+-- Geef per plaats het aantal klanten met Store of Hardware in hun naam
+SELECT PlaatsHfdkntr, COUNT(KlantNaam)
+FROM Klant
+WHERE KlantNaam LIKE '%Store%' OR KlantNaam LIKE '%Hardware%'
+GROUP BY PlaatsHfdkntr
+
+-- Geef per plaats het aantal klanten met Store en Hardware in hun naam
+SELECT PlaatsHfdkntr, COUNT(KlantNaam)
+FROM Klant
+WHERE KlantNaam LIKE '%Store%' AND KlantNaam LIKE '%Hardware%'
+GROUP BY PlaatsHfdkntr
