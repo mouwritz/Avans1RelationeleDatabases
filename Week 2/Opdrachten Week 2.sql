@@ -44,3 +44,43 @@ FROM Verkoper
 WHERE VerkoperNr IN (SELECT VerkoperNr
 					FROM Klant
 					WHERE KlantNr > 200)
+
+-- Dia 7
+-- Geef de totale omzet (van alle producten en verkopers tezamen)
+SELECT SUM(Aantal) AS Totaleomzet
+FROM Omzet
+
+-- Geef de gemiddelde kameroppervlakte
+SELECT AVG(Grootte) AS gemiddeldOppervlakte
+FROM Kamer
+
+-- Geef het hoogste verkopernummer
+SELECT MAX(VerkoperNr)
+FROM Verkoper
+
+-- Geef het aantal klanten in Los Angeles
+SELECT COUNT(*)
+FROM Klant
+WHERE PlaatsHfdkntr = 'Los Angeles'
+
+-- Geef het aantal klanten in Los Angeles en New York van de verkopers 137 en 204
+SELECT COUNT(*) AS AantalKlanten
+FROM Klant
+WHERE VerkoperNr IN (137, 204) AND PlaatsHfdkntr IN ('Los Angeles', 'New York')
+
+-- Geef het minimale en het maximale commissiepercentage van verkopers, die na 2000 in dienst zijn gekomen
+SELECT MIN(CommPerct) AS Minimum, MAX(CommPerct) AS Maximum
+FROM Verkoper
+WHERE JaarinDienst > 2000
+
+-- Geef het aantal kamers
+SELECT COUNT(*)
+FROM Kamer
+
+-- Geef de totale oppervlakte van alle kamers samen
+SELECT SUM(Grootte)
+FROM Kamer
+
+-- Geef een lijst met de verschillende productnummers
+SELECT DISTINCT ProductNr
+FROM Omzet
